@@ -1,0 +1,12 @@
+Build.PL
+Changes
+MANIFEST
+MANIFEST.SKIP
+SIGNATURE
+Makefile.PL
+README
+lib/Algorithm/NIN.pm
+t/00-load.t
+t/manifest.t
+t/pod.t
+META.yml
