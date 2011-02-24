@@ -8,24 +8,24 @@ Algorithm::NIN - A very simple module to validate national insurance number.
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Carp;
 use Readonly;
 use Data::Dumper;
 
-Readonly my $TOO_LONG                  => "Given NI number is longer than 9 characters.";
-Readonly my $INVALID_FIRST_LETTER      => "First letter of NI number can't be D,F,I,Q,U or V.";
-Readonly my $INVALID_SECOND_LETTER     => "Second letter of NI number can't be D,F,I,O,Q,U or V.";
-Readonly my $FIRST_TWO_LETTERS_INVALID => "First two lettes of NI number can't be BG,GB,NK,KN,NT or ZZ.";
-Readonly my $LAST_LETTER_INVALID       => "Last letter of NI number can only be A,B,C,D or a number.";
-Readonly my $MISSING_NUMBERS           => "NI number should have 6 numbers after the first two alphabets.";
-Readonly my $INVALID_TEMP_NUMBER       => "Temporary NI number should always start with TN and ends with either M or F.";
-Readonly my $INVALID_DOB               => "Temporary NI number contains invalid date of birth.";
+Readonly my $TOO_LONG                  => "Given NI number is longer than 9 characters";
+Readonly my $INVALID_FIRST_LETTER      => "First letter of NI number can't be D,F,I,Q,U or V";
+Readonly my $INVALID_SECOND_LETTER     => "Second letter of NI number can't be D,F,I,O,Q,U or V";
+Readonly my $FIRST_TWO_LETTERS_INVALID => "First two lettes of NI number can't be BG,GB,NK,KN,NT or ZZ";
+Readonly my $LAST_LETTER_INVALID       => "Last letter of NI number can only be A,B,C,D or a number";
+Readonly my $MISSING_NUMBERS           => "NI number should have 6 numbers after the first two alphabets";
+Readonly my $INVALID_TEMP_NUMBER       => "Temporary NI number should always start with TN and ends with either M or F";
+Readonly my $INVALID_DOB               => "Temporary NI number contains invalid date of birth";
 
 =head1 SYNOPSIS
 

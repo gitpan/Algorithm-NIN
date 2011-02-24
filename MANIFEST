@@ -7,6 +7,14 @@ Makefile.PL
 README
 lib/Algorithm/NIN.pm
 t/00-load.t
+t/01-test-case.t
+t/02-test-case.t
+t/03-test-case.t
+t/04-test-case.t
+t/05-test-case.t
+t/06-test-case.t
+t/07-test-case.t
+t/08-test-case.t
 t/manifest.t
 t/pod.t
 META.yml

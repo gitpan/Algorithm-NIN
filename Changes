@@ -1,5 +1,8 @@
 Revision history for Algorithm-NIN
 
+0.03    Thu Feb 24 11:19:43 2011
+        - Added test cases.
+
 0.02    Thu Feb 24 10:34:22 2011
         - Added SIGNATURE on build process.
         - Added SIGNATURE file to the distribution package.
