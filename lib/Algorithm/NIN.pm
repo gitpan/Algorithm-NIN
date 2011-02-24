@@ -8,17 +8,18 @@ Algorithm::NIN - A very simple module to validate national insurance number.
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Carp;
 use Readonly;
 use Data::Dumper;
 
-Readonly my $TOO_LONG                  => "Given NI number is longer than 9 characters";
+Readonly my $TOO_SHORT                 => "NI number can't be shorter than 8 characters";
+Readonly my $TOO_LONG                  => "NI number can't be longer than 9 characters";
 Readonly my $INVALID_FIRST_LETTER      => "First letter of NI number can't be D,F,I,Q,U or V";
 Readonly my $INVALID_SECOND_LETTER     => "Second letter of NI number can't be D,F,I,O,Q,U or V";
 Readonly my $FIRST_TWO_LETTERS_INVALID => "First two lettes of NI number can't be BG,GB,NK,KN,NT or ZZ";
@@ -52,6 +53,7 @@ sub validate
     chomp($ni);
     $ni =~ s/\s+//g;
     
+    croak(_error($TOO_SHORT))                 if (length($ni) < 8);
     croak(_error($TOO_LONG))                  if (length($ni) > 9);
     croak(_error($INVALID_FIRST_LETTER))      if ($ni =~ m/^(D|F|I|Q|U|V)/i);
     croak(_error($INVALID_SECOND_LETTER))     if ($ni =~ m/^[A-Z](D|F|I|O|Q|U|V)/i);
