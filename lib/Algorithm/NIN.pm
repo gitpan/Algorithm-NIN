@@ -8,11 +8,11 @@ Algorithm::NIN - A very simple module to validate national insurance number.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Carp;
 use Readonly;
@@ -23,7 +23,7 @@ Readonly my $INVALID_FIRST_LETTER      => "First letter of NI number can't be D,
 Readonly my $INVALID_SECOND_LETTER     => "Second letter of NI number can't be D,F,I,O,Q,U or V.";
 Readonly my $FIRST_TWO_LETTERS_INVALID => "First two lettes of NI number can't be BG,GB,NK,KN,NT or ZZ.";
 Readonly my $LAST_LETTER_INVALID       => "Last letter of NI number can only be A,B,C,D or a number.";
-Readonly my $MISSING_NUMBERS            => "NI number should have 6 numbers after the first two alphabets.";
+Readonly my $MISSING_NUMBERS           => "NI number should have 6 numbers after the first two alphabets.";
 Readonly my $INVALID_TEMP_NUMBER       => "Temporary NI number should always start with TN and ends with either M or F.";
 Readonly my $INVALID_DOB               => "Temporary NI number contains invalid date of birth.";
 
@@ -56,9 +56,9 @@ sub validate
     croak(_error($INVALID_FIRST_LETTER))      if ($ni =~ m/^(D|F|I|Q|U|V)/i);
     croak(_error($INVALID_SECOND_LETTER))     if ($ni =~ m/^[A-Z](D|F|I|O|Q|U|V)/i);
     croak(_error($FIRST_TWO_LETTERS_INVALID)) if ($ni =~ m/^(BG|GB|NK|KN|NT|ZZ)/i);
-    croak(_error($LAST_LETTER_INVALID))          if ($ni =~ m/(E|G-L|N-Z)$/i);
+    croak(_error($LAST_LETTER_INVALID))       if ($ni =~ m/(E|G-L|N-Z)$/i);
     croak(_error($MISSING_NUMBERS))           if ($ni !~ m/[A-Z][A-Z]\d\d\d\d\d\d/i);
-    croak(_error($INVALID_TEMP_NUMBER))          if (($ni =~ m/^TN/i) && ($ni !~ m/[M|F]$/i));
+    croak(_error($INVALID_TEMP_NUMBER))       if (($ni =~ m/^TN/i) && ($ni !~ m/[M|F]$/i));
 
     if (($ni =~ m/^TN/i) && ($ni =~ m/[M|F]$/i))
     {

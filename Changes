@@ -1,4 +1,10 @@
 Revision history for Algorithm-NIN
 
+0.02    Thu Feb 24 10:34:22 2011
+        - Added SIGNATURE on build process.
+        - Added SIGNATURE file to the distribution package.
+        - Added Module::Build v0.36 as pre-requisite in Build.PL.
+        - Removed create Makefile.PL on the fly from Build.PL.
+
 0.01    Wed Feb 23 18:08:10 2011
-        First version released.
+        - First version released.
