@@ -1,5 +1,9 @@
 Revision history for Algorithm-NIN
 
+0.05    Fri Feb 25 15:49:39 2011
+        - Slightly changed the module header to be more specific.
+        - Also updated the pod slightly for method validate().
+
 0.04    Thu Feb 24 11:34:51 2011
         - Updated error message for when NI is longer than 9 characters.
         - Added checks for when NI is shorter than 8 characters.

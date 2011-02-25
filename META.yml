@@ -1,5 +1,5 @@
 ---
-abstract: 'A very simple module to validate national insurance number.'
+abstract: 'A very simple module to validate national insurance number (UK).'
 author:
   - 'Mohammad S Anwar <mohammad.anwar@yahoo.com>'
 build_requires:
@@ -17,7 +17,7 @@ name: Algorithm-NIN
 provides:
   Algorithm::NIN:
     file: lib/Algorithm/NIN.pm
-    version: 0.04
+    version: 0.05
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.04
+version: 0.05

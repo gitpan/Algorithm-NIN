@@ -5,7 +5,7 @@ use Test::More tests => 1;
 use Algorithm::NIN;
 my ($status, $got, $ni);
 
-$ni = "BG123456C";
+$ni = 'BG123456C';
 eval { $status = Algorithm::NIN::validate($ni); };
 $got = $@;
 chomp($got);

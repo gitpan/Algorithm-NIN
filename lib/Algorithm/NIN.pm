@@ -4,15 +4,15 @@ use strict; use warnings;
 
 =head1 NAME
 
-Algorithm::NIN - A very simple module to validate national insurance number.
+Algorithm::NIN - A very simple module to validate national insurance number (UK).
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use Carp;
 use Readonly;
@@ -32,15 +32,14 @@ Readonly my $INVALID_DOB               => "Temporary NI number contains invalid 
 
     use Algorithm::NIN;
 
-    my $ni = "AA123456C";
+    my $ni = 'AA123456C';
     my $status = Algorithm::NIN::validate($ni);
-    ...
 
 =head1 METHODS
 
 =head2 validate
 
-This method accepts National Insurance number and validate it against the UK format (currently).
+This method accepts National Insurance number and validate it against the UK format.
 For more information please visit http://en.wikipedia.org/wiki/National_Insurance_UK
 
 =cut
