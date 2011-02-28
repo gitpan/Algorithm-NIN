@@ -17,6 +17,10 @@ t/07-test-case.t
 t/08-test-case.t
 t/09-test-case.t
 t/10-test-case.t
+t/11-test-case.t
+t/12-test-case.t
+t/13-test-case.t
+t/14-test-case.t
 t/manifest.t
 t/pod.t
 META.yml

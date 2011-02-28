@@ -1,5 +1,10 @@
 Revision history for Algorithm-NIN
 
+0.06    Mon Feb 28 11:35:10 2011
+        - Added NI contribution calculations.
+        - Added unit test for some test cases. More to come in the next release.
+        - Added DISCLAIMER section to the pod.
+
 0.05    Fri Feb 25 15:49:39 2011
         - Slightly changed the module header to be more specific.
         - Also updated the pod slightly for method validate().
