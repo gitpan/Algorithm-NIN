@@ -8,11 +8,11 @@ Algorithm::NIN - A very simple module to validate national insurance number (UK)
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 our $DEBUG   = 0;
 
 use Carp;

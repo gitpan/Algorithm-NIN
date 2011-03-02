@@ -1,5 +1,9 @@
 Revision history for Algorithm-NIN
 
+0.07    Wed Mar 02 10:59:19 2011
+        - Removed "-T" from the first line of 00-load.t, pod.t and manifest.t.
+          It appears to me that Mac OS X doesn't like it, for some reason.
+
 0.06    Mon Feb 28 11:35:10 2011
         - Added NI contribution calculations.
         - Added unit test for some test cases. More to come in the next release.
