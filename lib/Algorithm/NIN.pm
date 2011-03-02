@@ -8,11 +8,11 @@ Algorithm::NIN - A very simple module to validate national insurance number (UK)
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 our $DEBUG   = 0;
 
 use Carp;
@@ -168,9 +168,11 @@ sub format
 =head2 calculateNI
 
 Returns NI contributions (approx) according to HMRC website http://www.hmrc.gov.uk/rates/nic.htm
-It only covers fiscal year 2009-10, 2010-11 and 2011-2012. This method accepts the following parameter as reference to a hash.
-I don't claim the number you get back is exactly what you see in your pay slip. This is simply my attempt to understand the 
-mathematics behind the NI contributions. Any suggestion to improve the functionality is hight appreciated.
+It only covers fiscal year 2009-10, 2010-11 and 2011-2012. I don't claim the number you get back 
+is exactly what you see in your pay slip. This is simply my attempt to understand the mathematics 
+behind the NI contributions. Any suggestion to improve the functionality is hight appreciated.
+This method accepts the following parameter as reference to a hash.
+
 
 =over 4
 
