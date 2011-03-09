@@ -1,5 +1,8 @@
 Revision history for Algorithm-NIN
 
+0.09    Wed Mar 09 18:53:20 2011
+        - Changed the description of the module slightly.
+
 0.08    Wed Mar 02 15:01:11 2011
         - Corrected the pod for method calculateNI().
 
