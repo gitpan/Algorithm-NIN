@@ -4,15 +4,15 @@ use strict; use warnings;
 
 =head1 NAME
 
-Algorithm::NIN - Functions to validate National Insurance number (UK) and calculate NI contributions.
+Algorithm::NIN - Interface to validate National Insurance number (UK) and calculate NI contributions.
 
 =head1 VERSION
 
-Version 0.09
+Version 1.01
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '1.01';
 our $DEBUG   = 0;
 
 use Carp;
