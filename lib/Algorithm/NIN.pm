@@ -8,11 +8,11 @@ Algorithm::NIN - Interface to validate National Insurance number (UK) and calcul
 
 =head1 VERSION
 
-Version 1.01
+Version 1.02
 
 =cut
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our $DEBUG   = 0;
 
 use Carp;
@@ -31,8 +31,8 @@ Readonly my $INVALID_DOB               => "Temporary NI number contains invalid 
 
 Readonly my @VALID_PARAM => qw 
 [
-    fiscal_year   gross_salary annual_profit
-    self_employed married      sex
+    fiscal_year   gross_per_week annual_profit
+    self_employed married        sex
     class
 ];
 
@@ -59,7 +59,6 @@ Readonly my $TABLE =>
         'CLASS_4_RATE_B'                => .01,
         'MARRIED_WOMEN_RATE_A'          => .0485,
         'MARRIED_WOMEN_RATE_B'          => .01,
-        'FISCAL_WEEKS'                  => 52,
     },
     '2010-11' => 
     {
@@ -75,7 +74,6 @@ Readonly my $TABLE =>
         'CLASS_4_RATE_B'                => .01,
         'MARRIED_WOMEN_RATE_A'          => .0485,
         'MARRIED_WOMEN_RATE_B'          => .01,
-        'FISCAL_WEEKS'                  => 52,
     },
     '2011-12' => 
     {
@@ -91,7 +89,6 @@ Readonly my $TABLE =>
         'CLASS_4_RATE_B'                => .02,
         'MARRIED_WOMEN_RATE_A'          => .0585,
         'MARRIED_WOMEN_RATE_B'          => .02,
-        'FISCAL_WEEKS'                  => 52,
     },
 };
 
@@ -180,7 +177,7 @@ This method accepts the following parameter as reference to a hash.
 
 e.g. 2010-11
 
-=item * gross_salary  
+=item * gross_per_week
 
 e.g. 60000
 
@@ -242,12 +239,9 @@ sub calculateNI
         return _format_amount($TABLE->{$param->{fiscal_year}}->{CLASS_3_FLAT_PW});
     }
 
-    my $per_week_gross;
-    
-    if (defined($param->{gross_salary}))
+    if (defined($param->{gross_per_week}))
     {
-        $per_week_gross = $param->{gross_salary} / $TABLE->{$param->{fiscal_year}}->{FISCAL_WEEKS};
-        print "Gross per week [$per_week_gross]\n" if $DEBUG;
+        print "Gross per week [".$param->{gross_per_week}."]\n" if $DEBUG;
     }
 
     if (exists($param->{self_employed}) && ($param->{self_employed} == 0))
@@ -256,7 +250,7 @@ sub calculateNI
         {
             if (exists($param->{married}) && ($param->{married}))
             {
-                return _calculateNI($per_week_gross, 
+                return _calculateNI($param->{gross_per_week}, 
                                     $param->{fiscal_year}, 
                                     $TABLE->{$param->{fiscal_year}}->{PRIMARY_THRESHOLD_PW},
                                     $TABLE->{$param->{fiscal_year}}->{UPPER_EARNINGS_LIMIT_PW},
@@ -265,7 +259,7 @@ sub calculateNI
             }
             else
             {
-                return _calculateNI($per_week_gross, 
+                return _calculateNI($param->{gross_per_week}, 
                                     $param->{fiscal_year}, 
                                     $TABLE->{$param->{fiscal_year}}->{PRIMARY_THRESHOLD_PW},
                                     $TABLE->{$param->{fiscal_year}}->{UPPER_EARNINGS_LIMIT_PW},
@@ -275,7 +269,7 @@ sub calculateNI
         }
         else
         {
-            return _calculateNI($per_week_gross, 
+            return _calculateNI($param->{gross_per_week}, 
                                 $param->{fiscal_year}, 
                                 $TABLE->{$param->{fiscal_year}}->{PRIMARY_THRESHOLD_PW},
                                 $TABLE->{$param->{fiscal_year}}->{UPPER_EARNINGS_LIMIT_PW},
@@ -346,9 +340,9 @@ sub _calculateNI
 # Check if ANNUAL PROFIT is provided when CLASS is set to 4.
 # Check if MARITAL STATUS is provided when SEX is set to F/f.
 # Check if CLASS is set to either 2, 3 or 4.
-# Check if GROSS SALARY is provide when no CLASS found.
+# Check if GROSS PER WEEK is provided when no CLASS found.
 # Check if FISCAL YEAR is in the format YYYY-YY.
-# Check if GROSS SALARY/ANNUAL PROFIT is real number.
+# Check if GROSS PER WEEK/ANNUAL PROFIT is real number.
 sub _validate_param
 {
     my $param = shift;
@@ -368,19 +362,19 @@ sub _validate_param
     croak("ERROR: Annual profit is missing.\n")
         if (defined($param->{class}) && ($param->{class} == 4) && !defined($param->{annual_profit}));
     croak("ERROR: Gross salary is missing.\n")
-        if (defined($param->{class}) && ($param->{class} == 1) && !defined($param->{gross_salary}));
+        if (defined($param->{class}) && ($param->{class} == 1) && !defined($param->{gross_per_week}));
     croak("ERROR: Marital status is missing.\n")
         if (defined($param->{sex}) && ($param->{sex} =~ /F|f/i) && !defined($param->{married}));
     croak("ERROR: Invalid class provided.\n")
         if (defined($param->{self_employed}) && ($param->{self_employed} == 0) && 
             defined($param->{class}) && ($param->{class} =~ /2|3|4/));
-    croak("ERROR: Missing gross salary.\n")
-        if (!defined($param->{class}) && !defined($param->{gross_salary}));
+    croak("ERROR: Missing gross per week salary.\n")
+        if (!defined($param->{class}) && !defined($param->{gross_per_week}));
     croak("ERROR: Invalid fiscal year.\n")
         unless defined($TABLE->{$param->{fiscal_year}});
         
-    croak("ERROR: Invalid gross salary.\n")
-        if (defined($param->{gross_salary}) && ($param->{gross_salary} !~ /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/));
+    croak("ERROR: Invalid gross per week salary.\n")
+        if (defined($param->{gross_per_week}) && ($param->{gross_per_week} !~ /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/));
     croak("ERROR: Invalid annual profit.\n")
         if (defined($param->{annual_profit}) && ($param->{annual_profit} !~ /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/));
 }

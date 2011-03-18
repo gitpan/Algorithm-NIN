@@ -1,6 +1,15 @@
 Revision history for Algorithm-NIN
 
-1.01    Wed Mar 10 12:26:30 2011
+1.02    Fri Mar 18 14:44:29 2011
+        - Renamed key "gross_salary" to "gross_per_week".
+        - Removed "FISCAL_WEEKS" from the TABLE definitions.
+        - Updated method calculateNI() to take "gross_per_week" as provided.
+        - Updated method _validate_params() to look for key "gross_per_week".
+        - Updated test 11-test-case.t and 12-test-case.t for updated key "gross_per_week".
+        - Updated pod for method calculateNI() about the updated key "gross_per_week".
+        - Updated pod for method _validate_params() about the updated key "gross_per_week".
+
+1.01    Thu Mar 10 12:26:30 2011
         - One last time, promise, changed the description of the module.
 
 0.09    Wed Mar 09 18:53:20 2011
