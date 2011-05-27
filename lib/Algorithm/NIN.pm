@@ -4,15 +4,15 @@ use strict; use warnings;
 
 =head1 NAME
 
-Algorithm::NIN - Interface to validate National Insurance number (UK) and calculate NI contributions.
+Algorithm::NIN - Interface to UK National Insurance Number.
 
 =head1 VERSION
 
-Version 1.02
+Version 1.03
 
 =cut
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 our $DEBUG   = 0;
 
 use Carp;
@@ -92,24 +92,29 @@ Readonly my $TABLE =>
     },
 };
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-    use Algorithm::NIN;
-
-    my $ni = 'AA123456C';
-    my $status = Algorithm::NIN::validate($ni);
-    
-    or
-    
-    my $ni = 'AA 12 34 56 C';
-    my $status = Algorithm::NIN::validate($ni);
+This modules lets you validate UK National Insurance number.  This also has functionalities to
+format and calculate the NI.
 
 =head1 METHODS
 
-=head2 validate
+=head2 validate()
 
-This method accepts National Insurance number and validate it against the UK format.
-For more information please visit http://en.wikipedia.org/wiki/National_Insurance_UK
+This  method accepts National Insurance number and validate it against the UK format. For more
+information please visit http://en.wikipedia.org/wiki/National_Insurance_UK
+
+    use strict; use warnings;
+    use Algorithm::NIN;
+
+    my ($ni, $status);
+    $ni     = 'AA123456C';
+    $status = Algorithm::NIN::validate($ni);
+
+    # or
+    
+    $ni     = 'AA 12 34 56 C';
+    $status = Algorithm::NIN::validate($ni);
 
 =cut
 
@@ -138,10 +143,17 @@ sub validate
     return 1;
 }
 
-=head2 format
+=head2 format()
 
-This method accepts National Insurance number and returns back in the pair format.
-e.g. AA1234546C would become AA 12 34 56 C as it appears on NI card. 
+This method accepts National Insurance number and returns back in the pair format. For example
+'AA1234546C' would become 'AA 12 34 56 C' as it appears on NI card.
+
+    use strict; use warnings;
+    use Algorithm::NIN;
+
+    my ($ni);
+    $ni = 'AA123456C';
+    $ni = Algorithm::NIN::format($ni);
 
 =cut
 
@@ -162,67 +174,70 @@ sub format
     return;
 }
 
-=head2 calculateNI
+=head2 calculateNI()
 
 Returns NI contributions (approx) according to HMRC website http://www.hmrc.gov.uk/rates/nic.htm
-It only covers fiscal year 2009-10, 2010-11 and 2011-2012. I don't claim the number you get back 
-is exactly what you see in your pay slip. This is simply my attempt to understand the mathematics 
-behind the NI contributions. Any suggestion to improve the functionality is hight appreciated.
-This method accepts the following parameter as reference to a hash.
+It only covers fiscal year 2009-10, 2010-11 & 2011-12.I don't claim the number you get back is
+exactly what you see in your pay slip. This is simply my attempt to understand the internal of
+mathematics  behind  the NI  contributions. Suggestion to improve the functionality  is highly 
+appreciated. This method accepts the following parameter as hashref.
 
+    +----------------+-------------------------------------+
+    | Key            | Values                              |      
+    +----------------+-------------------------------------+
+    | fiscal_year    | '2009-10' or '2010-11' or '2011-12' |
+    | gross_per_week | 60000, when no class is provided    |  
+    | annual_profit  | 5000, only when class is 4          |
+    | self_employed  | 1 or 0                              |
+    | married        | 1 or 0                              |
+    | sex            | 'm' or 'f'                          |
+    | class          | 1 - for employed                    | 
+    |                | 2 - for self employed               | 
+    |                | 3 - for voluntary contributions     |    
+    |                | 4 - for self employed               |
+    +----------------+-------------------------------------+
 
-=over 4
+    use strict; use warnings;
+    use Algorithm::NIN;
 
-=item * fiscal_year
+    my ($ni);
+    $ni = Algorithm::NIN::calculateNI({ 
+          fiscal_year    => '2010-11', 
+          gross_per_week => 65000, 
+          self_employed  => 1, 
+          class          => 2 });
 
-e.g. 2010-11
+    # or
+    
+    $ni = Algorithm::NIN::calculateNI({ 
+          fiscal_year => '2010-11', 
+          class       => 3 });
+          
+    # or
+    
+    $ni = Algorithm::NIN::calculateNI({ 
+          fiscal_year   => '2010-11', 
+          annual_profit => 10000, 
+          self_employed => 1, 
+          class         => 4 });
 
-=item * gross_per_week
-
-e.g. 60000
-
-=item * annual_profit 
-
-e.g. 50000
-
-=item * self_employed 
-
-e.g. 1 or 0
-
-=item * married       
-
-e.g. 1 or 0
-
-=item * sex           
-
-e.g. m or f
-
-=item * class         
-
-e.g. 2 or 4 (only applicable to self-employed); 3 (voluntary contributions).
-
-
-=back
-
-=head1 TODO
-
-Following NI contributions scenarios are NOT yet covered.
-
-=over 4
-
-=item * Employer's contracted-out rebate, money-purchase schemes
-
-=item * Employer's contracted-out rebate, salary-related schemes
-
-=item * Employee's contracted-out rebate
-
-=item * Special Class 2 rate for share fishermen
-
-=item * Additional primary Class 1 percentage rate on deferred employments
-
-=item * Additional Class 4 percentage rate where deferment has been granted
-
-=back
+    # or
+    
+    $ni = Algorithm::NIN::calculateNI({ 
+          fiscal_year    => '2010-11', 
+          gross_per_week => 450, 
+          self_employed  => 0, 
+          married        => 0, 
+          sex            => 'f' });
+          
+    # or
+    
+    $ni = Algorithm::NIN::calculateNI({ 
+          fiscal_year    => '2010-11', 
+          gross_per_week => 450, 
+          self_employed  => 0, 
+          married        => 1, 
+          sex            => 'f' });
 
 =cut
 
@@ -334,7 +349,7 @@ sub _calculateNI
     }
 }
 
-# Checks the param is a reference to a HASH.
+# Checks the param is a HASHREF.
 # Compare keys of the hash with the list $VALID_PARAM.
 # Check if FISCAL YEAR is provided.
 # Check if ANNUAL PROFIT is provided when CLASS is set to 4.
@@ -397,9 +412,9 @@ Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-algorithm-nin at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Algorithm-NIN>.  
-I will be notified, and then you'll automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests to C<bug-algorithm-nin at rt.cpan.org>,  or through
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Algorithm-NIN>.I will be 
+notified, and then you'll automatically be notified of progress on your bug as I make changes.
 
 =head1 SUPPORT
 
@@ -429,21 +444,40 @@ L<http://search.cpan.org/dist/Algorithm-NIN/>
 
 =back
 
-=head1 ACKNOWLEDGEMENTS
+=head1 TODO
+
+Following NI contributions scenarios are NOT yet covered.
+
+=over 4
+
+=item * Employer's contracted-out rebate, money-purchase schemes
+
+=item * Employer's contracted-out rebate, salary-related schemes
+
+=item * Employee's contracted-out rebate
+
+=item * Special Class 2 rate for share fishermen
+
+=item * Additional primary Class 1 percentage rate on deferred employments
+
+=item * Additional Class 4 percentage rate where deferment has been granted
+
+=back
 
 =head1 LICENSE AND COPYRIGHT
 
 Copyright 2011 Mohammad S Anwar.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
+This  program  is  free  software; you can redistribute it and/or modify it under the terms of
+either:  the  GNU  General Public License as published by the Free Software Foundation; or the
+Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
 =head1 DISCLAIMER
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This  program  is  distributed in the hope that it will be useful,  but  WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 =cut
 

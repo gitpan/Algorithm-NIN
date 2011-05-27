@@ -1,5 +1,8 @@
 Revision history for Algorithm-NIN
 
+1.03    Fri May 27 15:26:35 2011
+        - Minor pod changes.
+
 1.02    Fri Mar 18 14:44:29 2011
         - Renamed key "gross_salary" to "gross_per_week".
         - Removed "FISCAL_WEEKS" from the TABLE definitions.
