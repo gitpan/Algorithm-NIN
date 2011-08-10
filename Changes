@@ -1,5 +1,9 @@
 Revision history for Algorithm-NIN
 
+1.04    Wed Aug 10 09:53:11 2011
+        - Made Readonly v1.03 as minimum requirement.
+        - Prepared the distribution using the Module::Signature v0.68.
+
 1.03    Fri May 27 15:26:35 2011
         - Minor pod changes.
 

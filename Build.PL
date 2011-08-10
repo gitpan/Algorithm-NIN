@@ -10,8 +10,8 @@ my $builder = Module::Build->new(
     add_to_cleanup      => [ 'Algorithm-NIN-*' ],
     build_requires      => {
         'Test::More'    => 0,
-        'Readonly'      => 0,
-        'Module::Build' => 0.36,
+        'Readonly'      => '1.03',
+        'Module::Build' => '0.36',
     },
 );
 

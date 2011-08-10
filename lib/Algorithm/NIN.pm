@@ -4,15 +4,15 @@ use strict; use warnings;
 
 =head1 NAME
 
-Algorithm::NIN - Interface to UK National Insurance Number.
+Algorithm::NIN - Interface to UK's National Insurance Number.
 
 =head1 VERSION
 
-Version 1.03
+Version 1.04
 
 =cut
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 our $DEBUG   = 0;
 
 use Carp;
@@ -94,7 +94,7 @@ Readonly my $TABLE =>
 
 =head1 DESCRIPTION
 
-This modules lets you validate UK National Insurance number.  This also has functionalities to
+This modules lets you validate UK National Insurance Number.  This also has functionalities to
 format and calculate the NI.
 
 =head1 METHODS

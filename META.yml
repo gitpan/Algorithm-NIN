@@ -1,10 +1,10 @@
 ---
-abstract: 'Interface to UK National Insurance Number.'
+abstract: "Interface to UK's National Insurance Number."
 author:
   - 'Mohammad S Anwar <mohammad.anwar@yahoo.com>'
 build_requires:
   Module::Build: 0.36
-  Readonly: 0
+  Readonly: 1.03
   Test::More: 0
 configure_requires:
   Module::Build: 0.36
@@ -17,7 +17,7 @@ name: Algorithm-NIN
 provides:
   Algorithm::NIN:
     file: lib/Algorithm/NIN.pm
-    version: 1.03
+    version: 1.04
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.03
+version: 1.04
